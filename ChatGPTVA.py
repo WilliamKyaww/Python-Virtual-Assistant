@@ -3,7 +3,7 @@ import speech_recognition as sr
 import pyttsx3
 
 import os
-OPENAI_KEY = "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"
+OPENAI_KEY = ""
 
 import openai
 openai.api_key = OPENAI_KEY
