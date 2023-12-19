@@ -1,6 +1,7 @@
 import speech_recognition as sr
 import pyttsx3
 from Opening_Apps import open_apps
+from Opening_Chrome import open_chrome
 
 r = sr.Recognizer()
 
@@ -33,3 +34,7 @@ while True:
     if text.split()[0] == "open":
         text = ' '.join(text.split()[1:])
         open_apps(text)
+
+    elif text.split()[0] == "search":
+        text = ' '.join(text.split()[1:])
+        open_chrome(text)

@@ -17,7 +17,7 @@ def open_apps(value):
         'chrome': chrome_path,
         'spotify': spotify_path,
         'zoom': zoom_path,
-        'vscode': vscode_path,
+        'vs code': vscode_path,
         'trello': trello_path,
         'notion': notion_path,
         'photoshop': photoshop_path,
