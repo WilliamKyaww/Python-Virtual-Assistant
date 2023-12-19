@@ -20,5 +20,6 @@ def open_chrome(value):
     if tab_path:
         webbrowser.get('chrome').open_new_tab(tab_path)
     else:
-        print('\033[91m Tab not programmed \033[0m')
+        search_url = f"https://www.google.com/search?q={value}"
+        webbrowser.get('chrome').open_new_tab(search_url)
         
