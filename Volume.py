@@ -14,16 +14,28 @@ def set_volume(change):
     volume.SetMasterVolumeLevel(newVolumeDb, None)
 
 def increase_volume():
-    set_volume(2.0)  # Increase volume by 2 dB
+    set_volume(4.0)  # Increase volume by 4 dB
 
 def decrease_volume():
-    set_volume(-2.0)  # Decrease volume by 2 dB
+    set_volume(-4.0)  # Decrease volume by 4 dB
+    
+def mute_volume():
+    devices = AudioUtilities.GetSpeakers()
+    interface = devices.Activate(IAudioEndpointVolume._iid_, CLSCTX_ALL, None)
+    volume = cast(interface, POINTER(IAudioEndpointVolume))
+    volume.SetMute(1, None)  # 1 to mute
 
-
+def unmute_volume():
+    devices = AudioUtilities.GetSpeakers()
+    interface = devices.Activate(IAudioEndpointVolume._iid_, CLSCTX_ALL, None)
+    volume = cast(interface, POINTER(IAudioEndpointVolume))
+    volume.SetMute(0, None)  # 0 to unmute
 
 def open_bluetooth_settings(): 
     command = "start ms-settings:bluetooth"
     os.system(command)
+    
+    
 
 
 

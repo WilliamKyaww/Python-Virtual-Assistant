@@ -1,6 +1,7 @@
-from Opening_Apps import open_apps
-from Opening_Chrome import open_chrome
-from Speech_to_Text import speech_input
+from Opening_Apps import *
+from Opening_Chrome import *
+from Speech_to_Text import *
+from Volume import *
 
 from dotenv import load_dotenv
 import os
@@ -21,8 +22,21 @@ while True:
     
     if text.split()[0] == "open":
         text = ' '.join(text.split()[1:])
-        open_apps(text)
+        open_app(text)
+        
+    elif text.split()[0] == "close":
+        text = ' '.join(text.split()[1:])
+        close_app(text)
 
     elif text.split()[0] == "search":
         text = ' '.join(text.split()[1:])
         open_chrome(text)
+        
+    elif "volume" in text:
+        if "increase" in text:
+            increase_volume()
+        elif "decrease" in text:
+            decrease_volume()
+            
+    elif "bluetooth" in text:
+        open_bluetooth_settings()
