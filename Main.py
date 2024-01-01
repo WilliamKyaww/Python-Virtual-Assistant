@@ -26,3 +26,5 @@ while True:
     elif text.split()[0] == "search":
         text = ' '.join(text.split()[1:])
         open_chrome(text)
+        
+    elif text contain the word "volume":
