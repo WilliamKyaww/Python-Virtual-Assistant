@@ -1,51 +1,71 @@
-from Opening_Apps import *
-from Opening_Chrome import *
-from Speech_to_Text import *
-from Volume import *
-
-from dotenv import load_dotenv
-import os
-
-load_dotenv()
-
-spotify_client_id = os.getenv('SPOTIFY_CLIENT_ID')
-spotify_client_secret = os.getenv('SPOTIFY_CLIENT_SECRET')
-openai_api_key = os.getenv('OPENAI_API_KEY')
-discord_bot_token = os.getenv('DISCORD_BOT_TOKEN')
-wikipedia_api_key = os.getenv('WIKIPEDIA_API_KEY')
+from Opening_Apps import open_app, close_app
+from Opening_Chrome import open_chrome
+from Speech_to_Text import speech_input
+from Volume import increase_volume, decrease_volume, mute_volume, unmute_volume
+from Bluetooth import open_bluetooth_settings
 
 
-while True:
-    text = speech_input()
-    print("\033[92m", text, "\033[0m")
-    print()
-    
-    if text.split()[0] == "open":
-        text = ' '.join(text.split()[1:])
-        open_app(text)
+def handle_command(text):
+    """Route a voice command to the appropriate handler.
 
-    if text.split()[0] == "close":
-        text = ' '.join(text.split()[1:])
-        close_app(text)
+    Returns False if the user requested to exit, True otherwise.
+    """
+    words = text.split()
 
-    elif text.split()[0] == "search":
-        text = ' '.join(text.split()[1:])
-        open_chrome(text)
-        
+    if not words:
+        return True
+
+    keyword = words[0]
+    argument = " ".join(words[1:])
+
+    if keyword == "open":
+        open_app(argument)
+
+    elif keyword == "close":
+        close_app(argument)
+
+    elif keyword == "search":
+        open_chrome(argument)
+
     elif "volume" in text:
-        if "increase" in text:
+        if "increase" in text or "up" in text:
             increase_volume()
-        elif "decrease" in text:
+        elif "decrease" in text or "down" in text:
             decrease_volume()
-            
-    elif "bluetooth" in text:
-        open_bluetooth_settings()
-    
+
     elif "unmute" in text:
         unmute_volume()
-        
-    elif "mute" in text:
-        print("testing")
-        mute_volume()
-        
 
+    elif "mute" in text:
+        mute_volume()
+
+    elif "bluetooth" in text:
+        open_bluetooth_settings()
+
+    elif text in ("stop", "exit", "quit", "goodbye"):
+        print("\033[94m Goodbye! \033[0m")
+        return False
+
+    else:
+        print(f"\033[91m Command not recognized: '{text}' \033[0m")
+
+    return True
+
+
+def main():
+    """Main loop — listen for voice commands and execute them."""
+    print("\033[96m JARVIS is starting up... \033[0m")
+    print("\033[96m Say 'stop', 'exit', or 'quit' to shut down. \033[0m")
+    print()
+
+    while True:
+        text = speech_input()
+        print("\033[92m", text, "\033[0m")
+        print()
+
+        if not handle_command(text):
+            break
+
+
+if __name__ == "__main__":
+    main()

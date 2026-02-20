@@ -1,0 +1,12 @@
+# Dependencies
+SpeechRecognition
+PyAudio
+pycaw
+comtypes
+python-dotenv
+
+# Optional — Spotify integration (WIP)
+# spotipy
+
+# Optional — Bluetooth via COM automation
+# pywin32

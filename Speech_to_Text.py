@@ -1,26 +1,27 @@
 import speech_recognition as sr
-import pyttsx3
 
-r = sr.Recognizer()
+_recognizer = sr.Recognizer()
+
 
 def speech_input():
-    while(1):
+    """Listen for speech and return the recognized text as a lowercase string.
+
+    Retries indefinitely on recognition errors until valid input is received.
+    Returns an empty string if no speech could be understood (should be
+    handled by the caller).
+    """
+    while True:
         try:
-            with sr.Microphone() as source2:
-                r.adjust_for_ambient_noise(source2, duration=0.2)
-                print("\033[93m Active \033[0m")
-                
-                audio2 = r.listen(source2)
-                MyText = r.recognize_google(audio2)
-                MyText = MyText.lower() 
-                
-                return MyText
-        
+            with sr.Microphone() as source:
+                _recognizer.adjust_for_ambient_noise(source, duration=0.2)
+                print("\033[93m Listening... \033[0m")
+
+                audio = _recognizer.listen(source)
+                text = _recognizer.recognize_google(audio)
+                return text.lower()
+
         except sr.RequestError as e:
-            print("\033[91m Could not request results; {0} \033[0m".format(e))
-            print()
-            
+            print(f"\033[91m Could not request results: {e} \033[0m")
+
         except sr.UnknownValueError:
-            print("\033[91m Unknown error occurred \033[0m")
-            print()
-            
+            print("\033[91m Could not understand audio \033[0m")
